@@ -1,6 +1,8 @@
 import express from "express"
 const app = express()
 
+// Indicar para o express ler body com json
+app.use(express.json())
 
 app.get('/', (req, res) => {
     res.send('Hello world!')
@@ -14,6 +16,11 @@ const alunos = [
 
 app.get('/alunos', (req, res) => {
     res.status(200).send(alunos)
+})
+
+app.post('/alunos', (req, res) => {
+    alunos.push(req.body)
+    res.status(201).send('Aluno adicionado com sucesso!')
 })
 
 export default app
