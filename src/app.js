@@ -18,6 +18,10 @@ function getAlunosByMatricula(matricula) {
     return alunos.filter(aluno => aluno.matricula == matricula)
 }
 
+function buscarIndexAluno(matricula) {
+    return alunos.findIndex(aluno => aluno.matricula == matricula)
+}
+
 app.get('/alunos', (req, res) => {
     res.status(200).send(alunos)
 })
@@ -31,8 +35,11 @@ app.post('/alunos', (req, res) => {
     res.status(201).send('Aluno adicionado com sucesso!')
 })
 
-app.delete('alunos/:matricula', (req, res) => {
+app.delete('/alunos/:matricula', (req, res) => {
+    const matricula = req.params.matricula;
     let index = buscarIndexAluno(matricula)
+    alunos.splice(index, 1)
+    res.send(`Aluno de matricula ${req.params.matricula} excluida com sucesso!`)
 })
 
 export default app
